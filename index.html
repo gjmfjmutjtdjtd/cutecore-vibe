@@ -143,18 +143,33 @@
     const likeButton = document.getElementById('likeButton');
     const likeCountElement = document.getElementById('like-count');
     
-    // Переменная для хранения количества лайков
-    let likeCount = 0;
+    // --- НОВЫЙ КОД ДЛЯ СОХРАНЕНИЯ ЛАЙКОВ ---
+    // Читаем количество лайков из "записной книжки" (localStorage)
+    let likeCount = localStorage.getItem('cutecoreLikeCount');
+    
+    // Если в "книжке" ничего нет, начинаем с нуля
+    if (likeCount === null) {
+        likeCount = 0;
+    } else {
+        // Если что-то есть, превращаем текст обратно в число
+        likeCount = parseInt(likeCount);
+    }
 
-    // Добавляем обработчик события на клик
+    // Показываем текущее количество лайков
+    likeCountElement.textContent = likeCount;
+
+    // --- НОВЫЙ КОД ДЛЯ ОБНОВЛЕНИЯ СЧЁТЧИКА И СОХРАНЕНИЯ ---
     likeButton.addEventListener('click', function() {
         // Увеличиваем счётчик на 1
         likeCount++;
         
-        // Обновляем текст в счётчике
+        // Обновляем текст на странице
         likeCountElement.textContent = likeCount;
 
-        // Создание и запуск анимации сердечек (код, который был у нас раньше)
+        // Сохраняем новое число в "записную книжку"
+        localStorage.setItem('cutecoreLikeCount', likeCount);
+
+        // Создание и запуск анимации сердечек
         const container = document.querySelector('.main-container');
         const buttonRect = this.getBoundingClientRect();
         
