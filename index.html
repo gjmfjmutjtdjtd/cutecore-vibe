@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Мой Cutecore Сайт</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+        body {
+            background-color: #ffdde1;
+            text-align: center;
+            font-family: 'Indie Flower', cursive;
+            color: #4a2d3c;
+            overflow-x: hidden;
+        }
+
+        .main-container {
+            background-color: #ffffff;
+            border-radius: 25px;
+            padding: 20px;
+            margin: 30px auto;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        img {
+            width: 300px;
+            border-radius: 20px;
+            margin-top: 20px;
+            border: 5px solid #87ceeb; 
+        }
+        h2 {
+            color: #ff69b4;
+        }
+        ul {
+            list-style-type: '💕';
+            display: inline-block;
+            text-align: left;
+            color: #ff69b4;
+            padding-left: 20px;
+        }
+        hr {
+            border-top: 2px dashed #ff69b4;
+            width: 50%;
+        }
+        footer {
+            margin-top: 30px;
+            font-style: italic;
+        }
+        
+        .like-button {
+            background-color: #ff69b4;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 18px;
+            margin: 20px 0;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s, transform 0.1s;
+            outline: none;
+        }
+        
+        .like-button:hover {
+            background-color: #ffb6c1;
+        }
+
+        .like-button:active {
+            transform: scale(0.98);
+        }
+
+        .heart {
+            position: absolute;
+            background-color: transparent;
+            font-size: 24px;
+            pointer-events: none;
+            animation: fly-out 2s forwards;
+            opacity: 0;
+            z-index: 1000;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        @keyframes fly-out {
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-200px) translateX(var(--x-offset)) scale(1.5) rotate(var(--rotation));
+                opacity: 0;
+            }
+        }
+        
+        #like-count {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff69b4;
+            margin-bottom: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1>Приветики! ^^</h1>
+        <p>Мир — это красота )</p>
+    
+        <h2>Мои любимые котятки</h2>
+        <img src="cute.jpg" alt="Милый котёнок">
+        <img src="love.jpg" alt="Милый котёнок">
+        <img src="kitty.jpg" alt="Милый котёнок">
+        
+        <hr>
+        
+        <h3>Мои любимые вещи</h3>
+        <ul>
+            <li>Мягкие игрушки</li>
+            <li>Горячий шоколад</li>
+            <li>Музыка</li>
+        </ul>
+
+        <hr>
+        
+        <span id="like-count">0</span>
+        <button class="like-button" id="likeButton">💖 Лайкнуть! 💖</button>
+        
+        <footer>
+            <p>Сайт сделан с любовью <3</p>
+        </footer>
+    </div>
+
+<script>
+    // Находим кнопку и элемент для счётчика
+    const likeButton = document.getElementById('likeButton');
+    const likeCountElement = document.getElementById('like-count');
+    
+    // Переменная для хранения количества лайков
+    let likeCount = 0;
+
+    // Добавляем обработчик события на клик
+    likeButton.addEventListener('click', function() {
+        // Увеличиваем счётчик на 1
+        likeCount++;
+        
+        // Обновляем текст в счётчике
+        likeCountElement.textContent = likeCount;
+
+        // Создание и запуск анимации сердечек (код, который был у нас раньше)
+        const container = document.querySelector('.main-container');
+        const buttonRect = this.getBoundingClientRect();
+        
+        for (let i = 0; i < 10; i++) {
+            const heart = document.createElement('span');
+            heart.classList.add('heart');
+            heart.innerHTML = '💖';
+            
+            const startX = buttonRect.left + buttonRect.width / 2 - 10 + Math.random() * 20;
+            const startY = buttonRect.top + buttonRect.height / 2 - 10 + Math.random() * 20;
+
+            heart.style.left = `${startX}px`;
+            heart.style.top = `${startY}px`;
+            
+            heart.style.setProperty('--x-offset', `${(Math.random() - 0.5) * 150}px`);
+            heart.style.setProperty('--rotation', `${(Math.random() - 0.5) * 360}deg`);
+            
+            document.body.appendChild(heart);
+            
+            heart.addEventListener('animationend', () => {
+                heart.remove();
+            });
+        }
+    });
+</script>
+</body>
+</html>
