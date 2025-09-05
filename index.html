@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Мой Cutecore Сайт</title>
+    <audio id="background-music" loop autoplay>
+      <source src="serenity.mp3" type="audio/mpeg">
+      Твой браузер не может воспроизвести аудио. :(
+    </audio>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 
@@ -75,6 +79,20 @@
             transform: scale(0.98);
         }
 
+        .page-button {
+            display: inline-block;
+            background-color: #87ceeb;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 10px 20px 10px;
+            border-radius: 15px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .page-button:hover {
+            background-color: #ff69b4;
+        }
+
         .heart {
             position: absolute;
             background-color: transparent;
@@ -107,17 +125,45 @@
             margin-bottom: 10px;
             display: block;
         }
+
+        .surprise-button {
+            background-color: #ffb6c1;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 15px;
+            transition: background-color 0.3s, transform 0.1s;
+            outline: none;
+        }
+
+        .surprise-button:hover {
+            background-color: #ff69b4;
+        }
+
+        .surprise-button:active {
+            transform: scale(0.98);
+        }
     </style>
 </head>
 <body>
     <div class="main-container">
         <h1>Приветики! ^^</h1>
+        
+        <a href="favorites.html" class="page-button">Любимое</a>
+        <a href="gallery.html" class="page-button">Галерея</a>
+        
         <p>Мир — это красота )</p>
     
         <h2>Мои любимые котятки</h2>
-        <img src="cute.jpg" alt="Милый котёнок">
-        <img src="love.jpg" alt="Милый котёнок">
-        <img src="kitty.jpg" alt="Милый котёнок">
+        <img src="img/cute.jpg" alt="Милый котёнок">
+        <img src="img/love.jpg" alt="Милый котёнок">
+        <img src="img/kitty.jpg" alt="Милый котёнок">
         
         <hr>
         
@@ -132,6 +178,7 @@
         
         <span id="like-count">0</span>
         <button class="like-button" id="likeButton">💖 Лайкнуть! 💖</button>
+        <button class="surprise-button" id="surpriseButton">Изменить цвет! ✨</button>
         
         <footer>
             <p>Сайт сделан с любовью <3</p>
@@ -139,37 +186,26 @@
     </div>
 
 <script>
-    // Находим кнопку и элемент для счётчика
     const likeButton = document.getElementById('likeButton');
     const likeCountElement = document.getElementById('like-count');
     
-    // --- НОВЫЙ КОД ДЛЯ СОХРАНЕНИЯ ЛАЙКОВ ---
-    // Читаем количество лайков из "записной книжки" (localStorage)
     let likeCount = localStorage.getItem('cutecoreLikeCount');
     
-    // Если в "книжке" ничего нет, начинаем с нуля
     if (likeCount === null) {
         likeCount = 0;
     } else {
-        // Если что-то есть, превращаем текст обратно в число
         likeCount = parseInt(likeCount);
     }
 
-    // Показываем текущее количество лайков
     likeCountElement.textContent = likeCount;
 
-    // --- НОВЫЙ КОД ДЛЯ ОБНОВЛЕНИЯ СЧЁТЧИКА И СОХРАНЕНИЯ ---
     likeButton.addEventListener('click', function() {
-        // Увеличиваем счётчик на 1
         likeCount++;
         
-        // Обновляем текст на странице
         likeCountElement.textContent = likeCount;
 
-        // Сохраняем новое число в "записную книжку"
         localStorage.setItem('cutecoreLikeCount', likeCount);
 
-        // Создание и запуск анимации сердечек
         const container = document.querySelector('.main-container');
         const buttonRect = this.getBoundingClientRect();
         
@@ -193,6 +229,16 @@
                 heart.remove();
             });
         }
+    });
+
+    const surpriseButton = document.getElementById('surpriseButton');
+    
+    surpriseButton.addEventListener('click', function() {
+        const r = Math.floor(Math.random() * 56) + 200;
+        const g = Math.floor(Math.random() * 56) + 200;
+        const b = Math.floor(Math.random() * 56) + 200;
+        const gentleColor = '#' + r.toString(16) + g.toString(16) + b.toString(16);
+        document.body.style.backgroundColor = gentleColor;
     });
 </script>
 </body>
